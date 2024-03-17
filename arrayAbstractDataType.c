@@ -17,14 +17,19 @@ void append(array *arr, uint32_t element);
 void insert(array *arr, uint32_t idx, uint32_t element);
 int32_t deleteElement(array *arr, uint32_t idx);
 void reverse(array *arr);
+uint8_t arrayIsAscending(array *arr);
+uint8_t arrayIsDescending(array *arr);
+void sortAscend(array *arr);
+void sortDescend(array *arr);
 void printArray(array *arr);
 
 
 int main(int argc, char *argv[])
 {
-	array signal = {
-	  {10,20,30,11,12,13,14}, 50, 7
-	};
+	array signal = {{10,20,30,11,12,13,14}, 50, 7};
+	
+	array OrderedSignal = {{7,6,5,4,3,2,1}, 50, 7};
+	
 	
 	printf("The original array is: \n\r");
 	printArray(&signal);
@@ -52,8 +57,20 @@ int main(int argc, char *argv[])
 	printf("The array after being reversed is: \n\r");
 	printArray(&signal);
 
-		
+	uint8_t ascendingFlag = arrayIsAscending(&OrderedSignal);
+	uint8_t descendingFlag = arrayIsDescending(&OrderedSignal);	
+	printf("Is the array ascending? %d\n\r", ascendingFlag);
+	printf("Is the array descending? %d\n\r", descendingFlag);
 	
+	sortAscend(&signal);
+	printf("The array after being sorted in ascending order is: \n\r");
+	printArray(&signal);
+	
+	sortDescend(&signal);
+		printf("The array after being sorted in descending order is: \n\r");
+	printArray(&signal);
+
+
 
 	return 0;
 }
@@ -135,6 +152,62 @@ void reverse(array *arr)
 	}
 }
 
+uint8_t arrayIsAscending(array *arr)
+{
+	for(int i = 0; i < arr->length-1; i++)
+	{
+		if(arr->data[i] > arr->data[i+1])
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
 
+uint8_t arrayIsDescending(array *arr)
+{
+	for(int i = 0; i < arr->length; i++)
+	{
+		if(arr->data[i] < arr->data[i+1])
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+void sortAscend(array *arr)
+{
+	int32_t i, j, nTemp;
+	
+	for(i = 1; i < arr->length; i++)
+	{
+	  nTemp = arr->data[i];
+	  j = i;
+	  while(j > 0 && nTemp < arr->data[j-1])
+	  {
+	  	arr->data[j] = arr->data[j-1];
+	  	j--;
+	  }
+	  arr->data[j] = nTemp;
+	}
+}
+
+void sortDescend(array *arr)
+{
+	int32_t i, j, nTemp;
+	
+	for(i = 1; i < arr->length; i++)
+	{
+		nTemp = arr->data[i];
+		j = i;
+		while(j > 0 && nTemp > arr->data[j-1])
+		{
+			arr->data[j] = arr->data[j-1];
+			--j;
+		}
+		arr->data[j] = nTemp;
+	}
+}
 
 
