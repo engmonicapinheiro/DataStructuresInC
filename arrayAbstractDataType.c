@@ -1,41 +1,12 @@
-#include<stdio.h>
-#include<stdint.h>
-#include<stdlib.h>
-
-/**** the array abstract data type ****/
-struct arrayType
-{
-	int32_t data[50];
-	int32_t capacity;    //capacity of the array is capped at 50
-	int32_t length; 	 //lenght of array the user wants to initialise. always <= to capacity
-};
-
-typedef struct arrayType array;
-
-/**** functions prototypes ****/
-void append(array *arr, uint32_t element);
-void insert(array *arr, uint32_t idx, uint32_t element);
-int32_t deleteElement(array *arr, uint32_t idx);
-void reverse(array *arr);
-uint8_t arrayIsAscending(array *arr);
-uint8_t arrayIsDescending(array *arr);
-void sortAscend(array *arr);
-void sortDescend(array *arr);
-int32_t arrayMaxValue(array *arr);
-int32_t arrayMinValue(array *arr);
-int32_t arraySum(array *arr);
-double arrayMean(array *arr);
-array* merge(array *arr1, array *arr2);
-void printArray(array *arr);
+#include "arrayType.h"
 
 
 int main(int argc, char *argv[])
 {
 	array signal = {{10,20,30,11,12,13,14}, 50, 7};	
 	array signal2 = {{11,21,31,11,11,13,14}, 50, 7};	
-	array OrderedSignal = {{7,6,5,4,3,2,1}, 50, 7};
+	array OrderedSignal = {{1,2,3,4,5,6,7,8,9,10}, 50, 10};
 	
-
 	
 	/** the basic operations **/
 	printf("The original array is: \n\r");
@@ -103,6 +74,8 @@ int main(int argc, char *argv[])
 
 	return 0;
 }
+
+
 
 /* types of insertion:
 1 - at the beginning of the list
@@ -324,5 +297,3 @@ array* merge(array *arr1, array *arr2)
 	
 	return destinationArray;
 }
-
-
