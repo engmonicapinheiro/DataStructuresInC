@@ -25,14 +25,17 @@ int32_t arrayMaxValue(array *arr);
 int32_t arrayMinValue(array *arr);
 int32_t arraySum(array *arr);
 double arrayMean(array *arr);
+array* merge(array *arr1, array *arr2);
 void printArray(array *arr);
 
 
 int main(int argc, char *argv[])
 {
 	array signal = {{10,20,30,11,12,13,14}, 50, 7};	
+	array signal2 = {{11,21,31,11,11,13,14}, 50, 7};	
 	array OrderedSignal = {{7,6,5,4,3,2,1}, 50, 7};
 	
+
 	
 	/** the basic operations **/
 	printf("The original array is: \n\r");
@@ -89,6 +92,13 @@ int main(int argc, char *argv[])
 	double mean = arrayMean(&signal);
 	printf("The mean of the elements of the array is: %f\n\r", mean);
 
+	printf("\n");
+
+	/** merging the two arrays **/
+	array *fullSignal = merge(&signal, &signal2);
+	
+	printf("The merged array is: \n\r");
+	printArray(fullSignal);
 
 
 	return 0;
@@ -279,5 +289,40 @@ double arrayMean(array *arr)
 	return mean;
 }
 
+array* merge(array *arr1, array *arr2)
+{
+	uint32_t i = 0;
+	uint32_t j = 0;
+	uint32_t k = 0;
+	
+	//dinamically create an array
+	array *destinationArray = (array *)malloc(sizeof(array));
+	
+	while(i < arr1->length && j < arr2->length)
+	{
+		if(arr1->data[i] < arr2->data[j])
+		{
+			destinationArray->data[k++] = arr1->data[i++];
+		}
+		else
+		{
+			destinationArray->data[k++] = arr2->data[j++];
+		}
+	}
+	
+	for(; i < arr1->length; i++)
+	{
+		destinationArray->data[k++] = arr1->data[i];
+	}
+	
+	for(; j < arr2->length; j++)
+	{
+		destinationArray->data[k++] = arr2->data[j];
+	}
+	
+	destinationArray->length = arr1->length + arr2->length;
+	
+	return destinationArray;
+}
 
 
