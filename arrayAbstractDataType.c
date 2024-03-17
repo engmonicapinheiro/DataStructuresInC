@@ -21,16 +21,20 @@ uint8_t arrayIsAscending(array *arr);
 uint8_t arrayIsDescending(array *arr);
 void sortAscend(array *arr);
 void sortDescend(array *arr);
+int32_t arrayMaxValue(array *arr);
+int32_t arrayMinValue(array *arr);
+int32_t arraySum(array *arr);
+double arrayMean(array *arr);
 void printArray(array *arr);
 
 
 int main(int argc, char *argv[])
 {
-	array signal = {{10,20,30,11,12,13,14}, 50, 7};
-	
+	array signal = {{10,20,30,11,12,13,14}, 50, 7};	
 	array OrderedSignal = {{7,6,5,4,3,2,1}, 50, 7};
 	
 	
+	/** the basic operations **/
 	printf("The original array is: \n\r");
 	printArray(&signal);
 	
@@ -57,6 +61,8 @@ int main(int argc, char *argv[])
 	printf("The array after being reversed is: \n\r");
 	printArray(&signal);
 
+
+	/** sorting the array **/
 	uint8_t ascendingFlag = arrayIsAscending(&OrderedSignal);
 	uint8_t descendingFlag = arrayIsDescending(&OrderedSignal);	
 	printf("Is the array ascending? %d\n\r", ascendingFlag);
@@ -69,6 +75,19 @@ int main(int argc, char *argv[])
 	sortDescend(&signal);
 		printf("The array after being sorted in descending order is: \n\r");
 	printArray(&signal);
+	
+	/** printing the statistics of the array **/
+	int32_t maxValue = arrayMaxValue(&signal);
+    printf("The maximum value of the array is: %d\n\r", maxValue);
+	
+	int32_t minValue = arrayMinValue(&signal);
+	printf("The minimum value of the array is: %d\n\r", minValue);
+	
+	int32_t sum = arraySum(&signal);
+	printf("The sum of the elements of the array is: %d\n\r", sum);
+	
+	double mean = arrayMean(&signal);
+	printf("The mean of the elements of the array is: %f\n\r", mean);
 
 
 
@@ -209,5 +228,56 @@ void sortDescend(array *arr)
 		arr->data[j] = nTemp;
 	}
 }
+
+int32_t arrayMaxValue(array *arr)
+{
+	int32_t max = arr->data[0];
+	
+	for(int i = 0; i < arr->length; i++)
+	{
+		if(arr->data[i] > max)
+		{
+			max = arr->data[i];
+		}
+	}
+	return max;
+}
+
+int32_t arrayMinValue(array *arr)
+{
+	int32_t min = arr->data[0];
+	
+	for(int i = 0; i < arr->length; i++)
+	{
+		if(arr->data[i] < min)
+		{
+			min = arr->data[i];
+		}
+	}
+	return min;
+}
+
+int32_t arraySum(array *arr)
+{
+	int32_t sum = 0;
+	
+	for(int i = 0; i < arr->length; i++)
+	{
+		sum += arr->data[i];
+	}
+	
+	return sum;
+}
+
+double arrayMean(array *arr)
+{
+	double mean = 0.0;
+	int32_t sum = arraySum(arr);
+	
+	mean = ((double)sum/arr->length);
+	
+	return mean;
+}
+
 
 
